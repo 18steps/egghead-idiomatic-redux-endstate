@@ -1,0 +1,23 @@
+span.star {
+  margin: 0.5em;
+  font-size: 24px;
+}
+span.number {
+  display: inline-block;
+  margin: 0.5em;
+  text-align: center;
+  background-color: #ccc;
+  width: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.number.selected {
+  background-color: #eee;
+  color: #ddd;
+  cursor: not-allowed;
+}
+.number.used {
+  background-color: #ada;
+  color: #9b9;
+  cursor: not-allowed;
+}

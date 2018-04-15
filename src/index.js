@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
-import App from './App';
+
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import configureStore from './configureStore';
+import Root from './components/Root';
 
+
+
+const store = configureStore();
 ReactDOM.render(
-  <App />,
+  <Root store={store} />,
   document.getElementById('root'),
 );
 

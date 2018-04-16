@@ -27,7 +27,7 @@ const delay = (ms) =>
   new Promise(resolve => setTimeout(resolve, ms));
 
 const fetchTodos = (filter) =>
-  delay(500).then(() => {
+  delay(5000*Math.random() + 1000).then(() => {
     switch (filter) {
       case 'all':
         return fakeDatabase.todos;

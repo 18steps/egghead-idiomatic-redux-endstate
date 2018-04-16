@@ -6,7 +6,7 @@ const createList = (filter) => {
     switch (action.type) {
       case 'FETCH_TODOS_SUCCESS':
         return (action.payload
-          && action.payload.filter == filter)
+          && action.payload.filter === filter)
           ? action.payload.response
             .map(todo => todo.id)
           : state;

@@ -1,6 +1,8 @@
 import v4 from 'uuid/v4';
 import * as api from '../api';
 import { getIsFetching } from '../reducers';
+import { normalize } from 'normalizr';
+import * as schema from './schema';
 
 
 const fetchTodos = (filter) =>
@@ -16,14 +18,19 @@ const fetchTodos = (filter) =>
     });
 
     return api.fetchTodos(filter).then(
-      response =>
-        dispatch({
+      response => {
+        console.log(
+          'normalized response',
+          normalize(response),
+        );
+        return dispatch({
           type: 'FETCH_TODOS_SUCCESS',
           payload: {
             filter,
             response,
           },
-        }),
+        });
+      },
       error =>
         dispatch({
           type: 'FETCH_TODOS_FAILURE',

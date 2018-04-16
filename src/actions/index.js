@@ -1,6 +1,12 @@
 import v4 from 'uuid/v4';
 import * as api from '../api';
 
+const requestTodos = (filter) => ({
+  type: 'REQUEST_TODOS',
+  payload: {
+    filter,
+  },
+});
 
 const receiveTodos = (filter, response) => ({
   type: 'RECEIVE_TODOS',
@@ -28,4 +34,9 @@ const toggleTodo = (todo) => ({
   payload: todo,
 });
 
-export { fetchTodos, addTodo, toggleTodo };
+export {
+  requestTodos,
+  fetchTodos,
+  addTodo,
+  toggleTodo,
+};

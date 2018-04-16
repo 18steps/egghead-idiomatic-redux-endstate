@@ -2,30 +2,36 @@ import v4 from 'uuid/v4';
 import * as api from '../api';
 import { getIsFetching } from '../reducers';
 
-const requestTodos = (filter) => ({
-  type: 'REQUEST_TODOS',
-  payload: {
-    filter,
-  },
-});
-
-const receiveTodos = (filter, response) => ({
-  type: 'RECEIVE_TODOS',
-  payload: {
-    filter,
-    response,
-  },
-});
 
 const fetchTodos = (filter) =>
   (dispatch, getState) => {
     if (getIsFetching(getState(), filter))
       return Promise.resolve();
 
-    dispatch(requestTodos(filter));
+    dispatch({
+      type: 'FETCH_TODOS_REQUEST',
+      payload: {
+        filter,
+      },
+    });
 
-    return api.fetchTodos(filter).then(response =>
-      dispatch(receiveTodos(filter, response)),
+    return api.fetchTodos(filter).then(
+      response =>
+        dispatch({
+          type: 'FETCH_TODOS_SUCCESS',
+          payload: {
+            filter,
+            response,
+          },
+        }),
+      error =>
+        dispatch({
+          type: 'FETCH_TODOS_FAILURE',
+          payload: {
+            filter,
+            message: error.message || 'Something went wrong.',
+          },
+        }),
     );
   };
 

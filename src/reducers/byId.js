@@ -1,6 +1,6 @@
 const byId = (state = {}, action) => {
   switch (action.type) {
-    case 'RECEIVE_TODOS': {
+    case 'FETCH_TODOS_SUCCESS': {
       return action.payload.response
         .reduce((memo, todo) => ({
           ...memo,

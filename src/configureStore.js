@@ -1,10 +1,13 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import promise from 'redux-promise';
 import todoApp from './reducers/';
 
+const thunk = (store) => (next) => (action) =>
+  typeof action === 'function'
+    ? action(store.dispatch)
+    : next(action);
 
 const configureStore = () => {
-  const middlewares = [ promise ];
+  const middlewares = [ thunk ];
 
   return createStore(
     todoApp,

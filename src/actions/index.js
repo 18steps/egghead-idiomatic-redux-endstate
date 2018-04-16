@@ -16,10 +16,13 @@ const receiveTodos = (filter, response) => ({
   },
 });
 
-const fetchTodos = (filter) =>
-  api.fetchTodos(filter).then(response =>
-    receiveTodos(filter, response),
+const fetchTodos = (filter) => (dispatch) => {
+  dispatch(requestTodos(filter));
+
+  return api.fetchTodos(filter).then(response =>
+    dispatch(receiveTodos(filter, response)),
   );
+};
 
 const addTodo = (text) => ({
   type: 'ADD_TODO',
@@ -35,7 +38,6 @@ const toggleTodo = (todo) => ({
 });
 
 export {
-  requestTodos,
   fetchTodos,
   addTodo,
   toggleTodo,

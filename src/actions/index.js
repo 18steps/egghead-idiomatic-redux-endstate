@@ -12,53 +12,41 @@ const fetchTodos = (filter) =>
 
     dispatch({
       type: 'FETCH_TODOS_REQUEST',
-      payload: {
-        filter,
-      },
+      filter,
     });
 
     return api.fetchTodos(filter).then(
-      response => {
-        console.log(
-          'normalized response',
-          normalize(response),
-        );
-        return dispatch({
+      response =>
+        dispatch({
           type: 'FETCH_TODOS_SUCCESS',
-          payload: {
-            filter,
-            response,
-          },
-        });
-      },
+          filter,
+          response: normalize(response, schema.arrayOfTodos),
+        }),
       error =>
         dispatch({
           type: 'FETCH_TODOS_FAILURE',
-          payload: {
-            filter,
-            message: error.message || 'Something went wrong.',
-          },
+          filter,
+          message: error.message || 'Something went wrong.',
         }),
     );
   };
 
 const addTodo = (text) => (dispatch) =>
   api.addTodo(text).then(
-    response => dispatch({
-      type: 'ADD_TODO_SUCCESS',
-      payload: response,
-    }),
+    response =>
+      dispatch({
+        type: 'ADD_TODO_SUCCESS',
+        response: normalize(response, schema.todo),
+      }),
     error => dispatch({
       type: 'ADD_TODO_FAILURE',
-      payload: {
-        message: error.message || 'Something went wrong.',
-      },
+      message: error.message || 'Something went wrong.',
     }),
   );
 
-const toggleTodo = (todo) => (dispatch) => ({
+const toggleTodo = (id) => (dispatch) => ({
   type: 'TOGGLE_TODO',
-  payload: todo,
+  id,
 });
 
 export {

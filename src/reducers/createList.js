@@ -5,14 +5,15 @@ const createList = (filter) => {
   const ids = (state = [], action) => {
     switch (action.type) {
       case 'FETCH_TODOS_SUCCESS':
-        return (action.payload
-          && action.payload.filter === filter)
-          ? action.payload.response
-            .map(todo => todo.id)
+        return (action.filter === filter)
+          ? action.response.result
           : state;
       case 'ADD_TODO_SUCCESS':
         return filter !== 'completed'
-          ? [ ...state, action.payload.id ]
+          ? [
+            ...state,
+            ...action.response.result,
+          ]
           : state;
       default:
         return state;
@@ -20,8 +21,7 @@ const createList = (filter) => {
   };
 
   const isFetching = (state = false, action) => {
-    if (action.payload
-      && action.payload.filter !== filter)
+    if (action.filter !== filter)
       return state;
 
     switch (action.type) {
@@ -36,13 +36,12 @@ const createList = (filter) => {
   };
 
   const errorMessage = (state = null, action) => {
-    if (action.payload
-      && action.payload.filter !== filter)
+    if (action.filter !== filter)
       return state;
 
     switch (action.type) {
       case 'FETCH_TODOS_FAILURE':
-        return action.payload.message;
+        return action.message;
       case 'FETCH_TODOS_REQUEST':
       case 'FETCH_TODOS_SUCCESS':
         return null;

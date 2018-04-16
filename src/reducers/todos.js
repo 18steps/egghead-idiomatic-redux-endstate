@@ -10,6 +10,12 @@ const byId = (state = {}, action) => {
         [ action.payload.id ]: todo(state[ action.payload.id ], action),
       };
     }
+    case 'RECEIVE_TODOS': {
+      return {
+        ...state,
+
+      }
+    }
     default:
       return state;
   }
@@ -43,6 +49,8 @@ const getVisibleTodos = (state, filter) => {
       return allTodos.filter(t => !t.completed);
     case 'completed':
       return allTodos.filter(t => t.completed);
+    default:
+      throw new Error(`Unknown filter: ${filter}`);
   }
 };
 

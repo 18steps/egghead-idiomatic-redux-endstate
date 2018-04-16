@@ -35,15 +35,21 @@ const fetchTodos = (filter) =>
     );
   };
 
-const addTodo = (text) => ({
-  type: 'ADD_TODO',
-  payload: {
-    id: v4(),
-    text,
-  },
-});
+const addTodo = (text) => (dispatch) =>
+  api.addTodo(text).then(
+    response => dispatch({
+      type: 'ADD_TODO_SUCCESS',
+      payload: response,
+    }),
+    error => dispatch({
+      type: 'ADD_TODO_FAILURE',
+      payload: {
+        message: error.message || 'Something went wrong.',
+      },
+    }),
+  );
 
-const toggleTodo = (todo) => ({
+const toggleTodo = (todo) => (dispatch) => ({
   type: 'TOGGLE_TODO',
   payload: todo,
 });

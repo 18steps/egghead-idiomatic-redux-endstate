@@ -44,10 +44,19 @@ const addTodo = (text) => (dispatch) =>
     }),
   );
 
-const toggleTodo = (id) => (dispatch) => ({
-  type: 'TOGGLE_TODO',
-  id,
-});
+const toggleTodo = (id) => (dispatch) => {
+  return api.toggleTodo(id).then(
+    response =>
+      dispatch({
+        type: 'TOGGLE_TODO_SUCCESS',
+        response: normalize(response, schema.todo),
+      }),
+    error => dispatch({
+      type: 'TOGGLE_TODO_ERROR',
+      message: error.message || 'Something went wrong.',
+    }),
+  );
+};
 
 export {
   fetchTodos,
